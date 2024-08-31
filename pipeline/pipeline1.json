@@ -27,23 +27,6 @@
 					},
 					"firstRowOnly": false
 				}
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "test",
-					"value": {
-						"value": "@activity('Extract Last Load Watermark Date ').output",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"variables": {

@@ -138,7 +138,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[test].[sp_update_watermark]",
 					"storedProcedureParameters": {
 						"last_updated_date": {
 							"value": {
@@ -154,7 +153,7 @@
 					}
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
+					"referenceName": "linkedService1",
 					"type": "LinkedServiceReference"
 				}
 			}
