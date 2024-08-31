@@ -1,0 +1,9 @@
+{
+	"name": "niteeshdataeng2prod",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3224ece2-3e10-4165-804a-a45b1a2cec7f",
+		"tenantId": "bb2775ad-a65f-4339-a056-f8d6fc88f260"
+	}
+}

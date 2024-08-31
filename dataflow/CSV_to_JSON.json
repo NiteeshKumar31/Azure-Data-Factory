@@ -1,0 +1,73 @@
+{
+	"name": "CSV_to_JSON",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Transactions",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Json_sink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          order_id as string,",
+				"          order_date as string,",
+				"          total_products as string,",
+				"          order_value as string,",
+				"          user_id as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(json = @(order_id_1=order_id,",
+				"          total_products_1=total_products,",
+				"          order_value_1=order_value,",
+				"          user_id_1=user_id)) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          order_date,",
+				"          json",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy(order_date),",
+				"     json = collect(json)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          orders as (order_date as string, order_id as string, invoice_num as string, cust_id as string, store_id as string, system_date as string, order_lines as (prod_id as string, qty as integer, tax as integer, tax_type as string, discount as integer, discount_type as string, currency_code as string)[])[]",
+				"     ),",
+				"     partitionFileNames:['csv_json.json'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,70 @@
+{
+	"name": "Zero_Padding_To_Integers",
+	"properties": {
+		"activities": [
+			{
+				"name": "Temp Variable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "temp",
+					"value": {
+						"value": "@substring(string(pipeline().parameters.Number) , sub(length(string(pipeline().parameters.Number)), pipeline().parameters.PaddingValue), pipeline().parameters.PaddingValue)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "PaddingNumber",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Temp Variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "PaddingNumber",
+					"value": {
+						"value": "@string(sub(pipeline().parameters.Number,int(variables('temp'))))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Number": {
+				"type": "int"
+			},
+			"PaddingValue": {
+				"type": "int"
+			}
+		},
+		"variables": {
+			"temp": {
+				"type": "String"
+			},
+			"PaddingNumber": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "AzureRealTimeScenarios"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-08-17T03:11:25Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

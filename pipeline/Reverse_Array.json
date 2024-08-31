@@ -1,0 +1,138 @@
+{
+	"name": "Reverse_Array",
+	"properties": {
+		"activities": [
+			{
+				"name": "Array_length",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Length_of_Array",
+					"value": {
+						"value": "@length(pipeline().parameters.InputArray)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "RangeOfIndex",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Array_length",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "RangeOfIndex",
+					"value": {
+						"value": "@range(0,variables('Length_of_Array'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "RangeOfIndex",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('RangeOfIndex')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Reversed_array",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Reversed_array",
+								"value": {
+									"value": "@pipeline().parameters.InputArray[sub(variables('Length_of_Array'), add(item(),1))]",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Final_array",
+					"value": {
+						"value": "@variables('Reversed_array')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"InputArray": {
+				"type": "array",
+				"defaultValue": [
+					"a",
+					"b",
+					"c",
+					"d"
+				]
+			}
+		},
+		"variables": {
+			"Length_of_Array": {
+				"type": "Integer"
+			},
+			"Reversed_array": {
+				"type": "Array"
+			},
+			"RangeOfIndex": {
+				"type": "Array"
+			},
+			"Final_array": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "AzureRealTimeScenarios"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-08-17T02:48:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,41 @@
+{
+	"name": "Inner_activity_run_count_based_on_datedifference",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@range(0, div(div(sub(ticks(formatDateTime(utcnow(), 'yyyy-MM-dd')), ticks(pipeline().parameters.RefDate)), 36000000000),24))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"RefDate": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "AzureRealTimeScenarios"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-08-16T14:11:56Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
