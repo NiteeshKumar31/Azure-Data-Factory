@@ -138,6 +138,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_sysdac_upgrade_instance]",
 					"storedProcedureParameters": {
 						"last_updated_date": {
 							"value": {

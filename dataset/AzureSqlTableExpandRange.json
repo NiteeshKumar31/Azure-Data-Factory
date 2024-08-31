@@ -2,7 +2,7 @@
 	"name": "AzureSqlTableExpandRange",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase1",
+			"referenceName": "linkedService1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -17,11 +17,7 @@
 				"name": "OrderUnits",
 				"type": "varchar"
 			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "expandrange"
-		}
+		]
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
