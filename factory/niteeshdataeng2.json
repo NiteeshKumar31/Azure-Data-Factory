@@ -1,0 +1,9 @@
+{
+	"name": "niteeshdataeng2",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "75c8a020-8c7c-4849-a999-492c0f263370",
+		"tenantId": "bb2775ad-a65f-4339-a056-f8d6fc88f260"
+	}
+}
